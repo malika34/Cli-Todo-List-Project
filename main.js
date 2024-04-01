@@ -21,7 +21,20 @@ while (condition) {
                 message: "Enter the task to add:"
             }
         ]);
-        toDos.push(addTask.todo);
+        const confirmAdd = await inquirer.prompt([
+            {
+                name: "confirm",
+                type: "confirm",
+                message: `Do you want to add "${addTask.todo}" to your todos?`
+            }
+        ]);
+        if (confirmAdd.confirm) {
+            toDos.push(addTask.todo);
+            console.log(chalk.bold.green(`Task "${addTask.todo}" added successfully!`));
+        }
+        else {
+            console.log(chalk.yellow("Task addition canceled."));
+        }
     }
     else if (addOrRemove.action === "Remove Task") {
         if (toDos.length === 0) {
@@ -40,4 +53,5 @@ while (condition) {
         console.log(chalk.blue(`${index + 1}. ${todo}`));
     });
 }
+;
 console.log(chalk.bold.yellow("Enjoy completing your tasks!"));
